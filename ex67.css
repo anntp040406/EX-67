@@ -1,0 +1,49 @@
+
+body {
+    font-family: Arial, sans-serif;
+    margin: 20px;
+}
+
+table {
+    border-collapse: collapse;
+    width: 600px;
+    margin-bottom: 20px;
+}
+
+th, td {
+    border: 1px solid #999;
+    padding: 8px;
+    text-align: left;
+}
+
+.list-title {
+    background-color: #ffd966;
+    text-align: center;
+    font-weight: bold;
+}
+
+
+.col-header {
+    background-color: #76933c;
+    color: white;
+    cursor: pointer;
+}
+
+
+#detailPage {
+    display: none;
+    margin-top: 30px;
+}
+
+.detail-title {
+    background-color: #ebf1de;
+    text-align: center;
+    font-weight: bold;
+}
+
+
+#idbodytable tr:hover {
+    background-color: yellow;
+    cursor: pointer;
+}
+tr { cursor: pointer; } 

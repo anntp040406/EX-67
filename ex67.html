@@ -1,0 +1,226 @@
+<!--
+<!DOCTYPE html>
+<html>
+<head>
+    <title>LIST OF STUDENTS</title>
+    <style>
+        .student-details {
+            display: none;
+        }
+        table {
+            border-collapse: collapse;
+        }
+        th {
+            text-align: center;
+        }
+    </style>
+
+    <script type="text/javascript">
+        var studentsData = [];
+        var sortOrders = {
+            id: 1,
+            name: 1,
+            birthday: 1,
+        };
+
+        function loadStudentdata() {
+            var xhr = new XMLHttpRequest();
+            xhr.open("GET", "ex67.xml", true);
+            xhr.send();
+            xhr.onreadystatechange = function () {
+                if (xhr.readyState == 4 && xhr.status == 200) {
+                    var parser = new DOMParser();
+                    var xmlDoc = parser.parseFromString(xhr.responseText, "application/xml");
+                    studentsData = Array.from(xmlDoc.getElementsByTagName("student")).map(student => ({
+                        id: student.querySelector("id").textContent,
+                        name: student.querySelector("name").textContent,
+                        birthday: student.querySelector("birthday").textContent,
+                        gender: student.querySelector("gender").textContent,
+                    }));
+                    renderTable();
+                }
+            };
+        }
+
+        function renderTable() {
+            var bodytable = document.getElementById("idbodytable");
+            bodytable.innerHTML = "";
+
+            studentsData.forEach(function (student) {
+                var tr = document.createElement("tr");
+                tr.innerHTML = "<td>" + student.id + "</td><td class='student-name' id='name_" + student.id + "'>" + student.name + "</td><td>" + student.birthday + "</td><td>" + student.gender + "</td>";
+                bodytable.appendChild(tr);
+
+                tr.addEventListener('click', function () {
+                    toggleStudentDetails(tr, student);
+                });
+
+                tr.onmouseover = function () {
+                    var tds = tr.getElementsByTagName("td");
+                    for (var i = 0; i < tds.length; i++) {
+                        tds[i].style.backgroundColor = "yellow";
+                    }
+                };
+
+                tr.onmouseout = function () {
+                    var tds = tr.getElementsByTagName("td");
+                    for (var i = 0; i < tds.length; i++) {
+                        tds[i].style.backgroundColor = "";
+                    }
+                };
+            });
+        }
+
+        function toggleStudentDetails(row, student) {
+            var detailsRow = document.getElementById("student-details-row");
+            var detailsTable = document.getElementById("student-details-table");
+
+            if (detailsRow.style.display === "none") {
+                detailsRow.style.display = "table-row";
+                detailsTable.innerHTML = `
+                    <td colspan='4'>
+                        <h2 style="text-align: center;background-color: rgb(154, 190, 154)">${student.name} information</h2>
+                        <table border='1' style='width: 100%'>
+                            <tr>
+                                <td>ID:</td>
+                                <td>${student.id}</td>
+                            </tr>
+                            <tr>
+                                <td>Name:</td>
+                                <td>${student.name}</td>
+                            </tr>
+                            <tr>
+                                <td>Birthday:</td>
+                                <td>${student.birthday}</td>
+                            </tr>
+                            <tr>
+                                <td>Gender:</td>
+                                <td>${student.gender}</td>
+                            </tr>
+                        </table>
+                    </td>`;
+            } else {
+                detailsRow.style.display = "none";
+                detailsTable.innerHTML = "";
+            }
+        }
+    </script>
+
+    <script type="text/javascript">
+        function sortColumn(n) {
+            var table, rows, switching, i, x, y, shouldSwitch, dir, switchcount = 0;
+            table = document.getElementById("idbodytable");
+            switching = true;
+            dir = "asc";
+            while (switching) {
+                switching = false;
+                rows = table.rows;
+                for (i = 0; i < (rows.length - 1); i++) {
+                    shouldSwitch = false;
+                    x = rows[i].getElementsByTagName("td")[n];
+                    y = rows[i + 1].getElementsByTagName("td")[n];
+                    if (dir == "asc") {
+                        if (x.innerHTML.toLowerCase() > y.innerHTML.toLowerCase()) {
+                            shouldSwitch = true;
+                            break;
+                        }
+                    } else if (dir == "desc") {
+                        if (x.innerHTML.toLowerCase() < y.innerHTML.toLowerCase()) {
+                            shouldSwitch = true;
+                            break;
+                        }
+                    }
+                }
+                if (shouldSwitch) {
+                    rows[i].parentNode.insertBefore(rows[i + 1], rows[i]);
+                    switching = true;
+                    switchcount++;
+                } else {
+                    if (switchcount == 0 && dir == "asc") {
+                        dir = "desc";
+                        switching = true;
+                    }
+                }
+            }
+        }
+    </script>
+</head>
+<body>
+    <table border="1" style="width: 400px;">
+        <thead>
+            <tr>
+                <th colspan="4" style="background-color: yellow;">List of students</th>
+            </tr>
+            <tr style="background-color: green; color: white;">
+                <th onclick="sortColumn(0)">Student ID</th>
+                <th onclick="sortColumn(1)">Student Name</th>
+                <th onclick="sortColumn(2)">Birthday</th>
+                <th onclick="sortColumn(3)">Gender</th>
+            </tr>
+        </thead>
+        <tbody id="idbodytable"></tbody>
+    </table>
+
+    <br/>
+
+    <table style="width: 400px;">
+        <tbody>
+            <tr id="student-details-row" class="student-details">
+                <td colspan="4" id="student-details-table"></td>
+            </tr>
+        </tbody>
+    </table>
+
+    <script type="text/javascript">
+        loadStudentdata();
+    </script>
+</body>
+</html>
+-->
+
+
+
+
+
+
+
+
+
+
+<!DOCTYPE html>
+<html>
+<head>
+    <meta charset="UTF-8">
+    <title>Exercise 67 </title>
+    <link rel="stylesheet" href="ex67.css">
+    
+</head>
+<body onload="loadXMLData()">
+    <table>
+        <thead>
+            <tr><th colspan="4" class="list-title">List of Students</th></tr>
+            <tr class="col-header">
+                <th onclick="sortTable('id')">Student ID</th>
+                <th onclick="sortTable('name')">Student Name</th>
+                <th onclick="sortTable('birthday')">Birthday</th>
+                <th onclick="sortTable('gender')">Gender</th>
+            </tr>
+        </thead>
+        <tbody id="idbodytable">
+        </tbody>
+    </table>
+    <div id="detailPage">
+        <table>
+            <tr><th colspan="2" class="detail-title">Student Information</th></tr>
+            <tr><td width="40%">Student ID:</td> <td id="d_id"></td></tr>
+            <tr><td>Student Name:</td> <td id="d_name"></td></tr>
+            <tr><td>Birthday:</td> <td id="d_bday"></td></tr>
+            <tr><td>Gender:</td> <td id="d_sex"></td></tr>
+        </table>
+    </div>
+    <script src="ex67.js">
+    </script>
+
+    
+</body>
+</html>
